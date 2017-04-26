@@ -1,11 +1,9 @@
-package com.gomeplus.sendmail.query;
+package com.sheng.alarm.query;
+
 
 import java.io.File;
-import java.io.FileFilter;
 import java.io.IOException;
-import java.nio.charset.Charset;
 import java.text.SimpleDateFormat;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
@@ -15,9 +13,10 @@ import java.util.Map;
 
 import org.apache.commons.io.FileUtils;
 
-import com.gomeplus.sendmail.result.impl.ErrorMapper;
-import com.gomeplus.sendmail.result.impl.MainMapper;
-import com.gomeplus.sendmail.util.PropertiesUtil;
+import com.sheng.alarm.result.IMapper;
+import com.sheng.alarm.result.impl.ErrorMapper;
+import com.sheng.alarm.result.impl.MainMapper;
+import com.sheng.alarm.util.PropertiesUtil;
 
 public class ExcuteQuery {
 
@@ -37,7 +36,7 @@ public class ExcuteQuery {
 		return fileCollection.toArray(new File[fileCollection.size()]);
 	}
 
-	public void excute() throws IOException {
+	public void excute() throws IOException {/*
 		Map<String, Map<String, Object>> result = new HashMap<>();
 		File[] templeteFileArray = getTempleFilePath();
 		for (File templeteFile : templeteFileArray) {
@@ -59,13 +58,16 @@ public class ExcuteQuery {
 		}
 
 		System.out.println(result);
-	}
+	*/}
 
 	private static String replaceIndex() {
 		Date date = new Date();
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyy.MM.dd");
 		return String.format(INDEX_TEMPLETE, formatter.format(date));
 	}
+	
+	
+	
 	
 	private static String replaceTime(String content) {
 		Date date = new Date();
@@ -75,34 +77,13 @@ public class ExcuteQuery {
 		return String.format(content, calendar.getTime().getTime(), date.getTime());
 	}
 
-	public static Map<String, IExcute> suffixMap = new HashMap<>();
+	public static Map<String, IMapper> suffixMap = new HashMap<>();
 	static {
-		suffixMap.put("main", new MainExcute());
-		suffixMap.put("error", new ErrorExcute());
+		suffixMap.put("main", new MainMapper());
+		suffixMap.put("error", new ErrorMapper());
 	}
 
-	public interface IExcute {
-		public Map<String, Object> excute(String index, String content);
-	}
 
-	private static class MainExcute implements IExcute {
-
-		@Override
-		public Map<String, Object> excute(String index, String content) {
-			content = replaceTime(content);
-			Map<String, Object> result = QueryAction.get(index, content, new MainMapper());
-			return result;
-		}
-	}
-
-	private static class ErrorExcute implements IExcute {
-		@Override
-		public Map<String, Object> excute(String index, String content) {
-			content = replaceTime(content);
-			Map<String, Object> result = QueryAction.get(index, content, new ErrorMapper());
-			return result;
-		}
-	}
 
 	public static void main(String[] args) throws IOException {
 		new ExcuteQuery().excute();

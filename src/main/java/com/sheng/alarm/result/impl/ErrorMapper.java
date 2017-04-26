@@ -1,11 +1,12 @@
-package com.gomeplus.sendmail.result.impl;
+package com.sheng.alarm.result.impl;
+
 
 import java.util.HashMap;
 import java.util.Map;
 
 import org.elasticsearch.action.search.SearchResponse;
 
-import com.gomeplus.sendmail.result.IMapper;
+import com.sheng.alarm.result.IMapper;
 
 public class ErrorMapper implements IMapper {
 

@@ -1,4 +1,5 @@
-package com.gomeplus.sendmail.util;
+package com.sheng.alarm.util;
+
 
 import java.io.IOException;
 import java.util.Map;

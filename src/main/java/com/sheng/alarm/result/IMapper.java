@@ -1,4 +1,5 @@
-package com.gomeplus.sendmail.result;
+package com.sheng.alarm.result;
+
 
 import java.util.Map;
 
